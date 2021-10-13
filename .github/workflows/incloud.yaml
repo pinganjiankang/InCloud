@@ -35,12 +35,12 @@ jobs:
           go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
         shell: bash
 
-     # - name: Running httpx for HTTP webservers probbing
-     #  run: |
-     #     httpx -l input/domains.txt -title
-      #    httpx -l input/domains.txt | tee output/active_urls.txt
-       #   curl ipinfo.io
-        #shell: bash
+      - name: Running httpx for HTTP webservers probbing
+        run: |
+          httpx -l input/domains.txt -title
+          httpx -l input/domains.txt | tee output/active_urls.txt
+          curl ipinfo.io
+        shell: bash
 
       - name: Downloading Nuclei Templates
         run: |
@@ -50,14 +50,12 @@ jobs:
       - name: where Nuclei Templates
         run: |
           pwd
-          ls -al
-          find /* -name 'nuclei-templates' -type d
         shell: bash
 
 
       - name: Running Nuclei for vulnerability assessment
         run: |
-          nuclei -t nuclei-templates/ -severity critical,medium -l output/active_urls.txt -bs 100 -c 50 -rl 300 -nc | tee output/nuclei_output.txt
+          nuclei -t /home/runner/nuclei-templates -severity critical,medium -l output/active_urls.txt -bs 100 -c 50 -rl 300 -nc | tee output/nuclei_output.txt
         shell: bash
 
       - name: Sorting the output results
