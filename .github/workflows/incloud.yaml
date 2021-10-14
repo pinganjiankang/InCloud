@@ -41,7 +41,16 @@ jobs:
         run: |
           python2 -V
       
-      - name: apt install pip2
+     # - name: apt install pip2
+     #   run: |
+     #     sudo pip2.7 install -r requirements.txt
+          
+      - name: run BBscan
         run: |
-          sudo apt install python2-pip -y 
+          git clone https://github.com/lijiejie/BBScan.git
+          pwd
+          ls
+          sudo pip2.7 install -r requirements.txt
+          python2 BBScan/BBScan.py -f input/domains.txt
+          cat BBScan/report/*.html
           
